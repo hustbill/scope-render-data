@@ -1,0 +1,40 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/hzhang/n/bin/node',
+1 verbose cli   '/home/hzhang/n/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'noprobe' ]
+2 info using npm@2.14.7
+3 info using node@v4.2.2
+4 verbose run-script [ 'prenoprobe', 'noprobe', 'postnoprobe' ]
+5 info prenoprobe weave-scope@1.2.0
+6 info noprobe weave-scope@1.2.0
+7 verbose unsafe-perm in lifecycle true
+8 info weave-scope@1.2.0 Failed to exec noprobe script
+9 verbose stack Error: weave-scope@1.2.0 noprobe: `../scope stop && ../scope launch --no-probe --app.window 8760h`
+9 verbose stack spawn ENOENT
+9 verbose stack     at ChildProcess.<anonymous> (/home/hzhang/n/lib/node_modules/npm/lib/utils/spawn.js:17:16)
+9 verbose stack     at emitTwo (events.js:87:13)
+9 verbose stack     at ChildProcess.emit (events.js:172:7)
+9 verbose stack     at maybeClose (internal/child_process.js:818:16)
+9 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+10 verbose pkgid weave-scope@1.2.0
+11 verbose cwd /home/hzhang/git/scope-render-data/render-data/client
+12 error Linux 4.4.0-66-generic
+13 error argv "/home/hzhang/n/bin/node" "/home/hzhang/n/bin/npm" "run" "noprobe"
+14 error node v4.2.2
+15 error npm  v2.14.7
+16 error file sh
+17 error code ELIFECYCLE
+18 error errno ENOENT
+19 error syscall spawn
+20 error weave-scope@1.2.0 noprobe: `../scope stop && ../scope launch --no-probe --app.window 8760h`
+20 error spawn ENOENT
+21 error Failed at the weave-scope@1.2.0 noprobe script '../scope stop && ../scope launch --no-probe --app.window 8760h'.
+21 error This is most likely a problem with the weave-scope package,
+21 error not with npm itself.
+21 error Tell the author that this fails on your system:
+21 error     ../scope stop && ../scope launch --no-probe --app.window 8760h
+21 error You can get their info via:
+21 error     npm owner ls weave-scope
+21 error There is likely additional logging output above.
+22 verbose exit [ 1, true ]
