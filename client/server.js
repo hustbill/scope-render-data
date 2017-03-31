@@ -18,7 +18,8 @@ var WEBPACK_SERVER_HOST = process.env.WEBPACK_SERVER_HOST || 'localhost';
 
 var backendProxy = httpProxy.createProxy({
   ws: true,
-  target: 'http://' + BACKEND_HOST + ':4040'
+  //target: 'http://' + BACKEND_HOST + ':4040'
+  target: 'http://117.78.42.224' + ''+ ':30040'  // use
 });
 backendProxy.on('error', function(err) {
   console.error('Proxy error', err);
