@@ -4,3 +4,12 @@ To Do List
 2. Pod network topology display in UI
 3. Show the bandwith data
 4. Pull InfluxDB during the time interval (3000 ms)
+
+
+Code List
+===================
+1. metric-feeder.js
+client/app/scripts/hoc/metric-feeder.js
+
+2. update all request workers with new options
+client/app/scripts/actions/app-actions.js
