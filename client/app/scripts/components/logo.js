@@ -1,5 +1,11 @@
 /* eslint react/jsx-first-prop-new-line: "off" */
 /* eslint max-len: "off" */
+/* use IcoMoon to conver svg image : huawei-logo.svg to svg components
+   Ref:
+   1. http://stackoverflow.com/questions/24252209/converting-svg-to-font-icon-using-icomoon
+   2. https://icomoon.io/app/#/select
+   3. http://imagecolorpicker.com/
+*/
 import React from 'react';
 
 export default function Logo() {
