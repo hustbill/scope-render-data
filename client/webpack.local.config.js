@@ -113,6 +113,10 @@ module.exports = {
       {
         test: /\.(scss|css)$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss!sass-loader')
+      },
+      {
+        test: /\.(png|jpg)$/,
+        loader: 'url-loader?limit=8192'
       }
     ]
   },
