@@ -7,3 +7,4 @@ browserPerf('http://local.docker:4040/dev.html', function(err, res){
     console.error(err);
     console.log(res);
 }, options);
+
