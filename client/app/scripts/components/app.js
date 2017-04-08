@@ -7,7 +7,6 @@ import Footer from './footer';
 import Sidebar from './sidebar';
 import HelpPanel from './help-panel';
 import TroubleshootingMenu from './troubleshooting-menu';
-import Search from './search';
 import Status from './status';
 import Topologies from './topologies';
 import TopologyOptions from './topology-options';
@@ -121,7 +120,6 @@ class App extends React.Component {
               <Logo />
             </svg>}
           </div>
-          <Search />
           <Topologies />
           <GridModeSelector />
         </div>
@@ -147,8 +145,6 @@ function mapStateToProps(state) {
     activeTopologyOptions: activeTopologyOptionsSelector(state),
     gridMode: state.get('gridMode'),
     routeSet: state.get('routeSet'),
-    searchFocused: state.get('searchFocused'),
-    searchQuery: state.get('searchQuery'),
     showingDetails: state.get('nodeDetails').size > 0,
     showingHelp: state.get('showingHelp'),
     showingTroubleshootingMenu: state.get('showingTroubleshootingMenu'),
