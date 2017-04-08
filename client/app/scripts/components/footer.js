@@ -18,7 +18,7 @@ class Footer extends React.Component {
     this.props.setContrastMode(!this.props.contrastMode);
   }
   render() {
-    const { hostname, updatePausedAt, version, versionUpdate, contrastMode } = this.props;
+    const { updatePausedAt, versionUpdate, contrastMode } = this.props;
 
     const otherContrastModeTitle = contrastMode
       ? 'Switch to normal contrast' : 'Switch to high contrast';
@@ -58,10 +58,6 @@ class Footer extends React.Component {
             target="_blank" rel="noopener noreferrer">
             Update available: {versionUpdate.version}
           </a>}
-          <span className="footer-label">Version</span>
-          {version}
-          <span className="footer-label">on</span>
-          {hostname}
         </div>
 
         <div className="footer-plugins">
