@@ -64,7 +64,7 @@ class Topologies extends React.Component {
       <div className="topologies-item" key={topologyId}>
         <div className={className} title={title} rel={topologyId} onClick={this.onTopologyClick}>
           <div className="topologies-item-label">
-            {topology.get('name')}
+            { topology.get('name')}
           </div>
         </div>
         {/* <div className="topologies-sub">

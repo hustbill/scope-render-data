@@ -30,10 +30,10 @@ const sampleArray = (collection, n = 4) => sampleSize(collection, random(n));
 const log = debug('scope:debug-panel');
 
 const shapeTypes = {
+  heptagon: ['Pod', 'Pods'],
   square: ['Process', 'Processes'],
   hexagon: ['Container', 'Containers'],
-  heptagon: ['Pod', 'Pods'],
-  circle: ['Host', 'Hosts']
+  circle: ['Host', 'Nodes']
 };
 
 

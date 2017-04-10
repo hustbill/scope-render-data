@@ -15,7 +15,7 @@ import { Set as makeSet, List as makeList } from 'immutable';
 
 const TOPOLOGY_DISPLAY_PRIORITY = [
   'pods',
-//  'containers',
+  'containers',
 //  'ecs-services',
 //  'ecs-tasks',
   'services',
