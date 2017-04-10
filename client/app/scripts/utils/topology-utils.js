@@ -1,11 +1,9 @@
 import { endsWith } from 'lodash';
 import { Set as makeSet, List as makeList } from 'immutable';
 
-
-//
 // top priority first
-//
-const TOPOLOGY_DISPLAY_PRIORITY = [
+
+/* const TOPOLOGY_DISPLAY_PRIORITY = [
   'ecs-services',
   'ecs-tasks',
   'services',
@@ -13,8 +11,17 @@ const TOPOLOGY_DISPLAY_PRIORITY = [
   'replica-sets',
   'pods',
   'containers',
-];
+]; */
 
+const TOPOLOGY_DISPLAY_PRIORITY = [
+  'pods',
+//  'containers',
+//  'ecs-services',
+//  'ecs-tasks',
+  'services',
+  'deployments',
+  'replica-sets'
+];
 
 export function getDefaultTopology(topologies) {
   const flatTopologies = topologies

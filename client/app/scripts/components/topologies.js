@@ -67,10 +67,10 @@ class Topologies extends React.Component {
             {topology.get('name')}
           </div>
         </div>
-        <div className="topologies-sub">
+        {/* <div className="topologies-sub">
           {topology.has('sub_topologies')
             && topology.get('sub_topologies').map(subTop => this.renderSubTopology(subTop))}
-        </div>
+        </div> */}
       </div>
     );
   }
