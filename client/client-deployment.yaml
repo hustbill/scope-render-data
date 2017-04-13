@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: client
-        image: billyzhang2010/client
+        image: billyzhang2010/scope-client:latest
         imagePullPolicy: IfNotPresent
         args:
           - -target=frontend.default.svc.cluster.local

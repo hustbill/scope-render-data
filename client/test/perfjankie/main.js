@@ -16,8 +16,7 @@ perfjankie({
 
   /* Identifies where the data and the dashboard are saved */
   couch: {
-   // server: 'http://local.docker:5984',
-    server: 'http://127.0.0.1:5984',
+    server: 'http://local.docker:5984',
     database: 'performance'
     // updateSite: !process.env.CI, // If true, updates the couchApp that shows the dashboard. Set to false in when running Continuous integration, run this the first time using command line.
     // onlyUpdateSite: false // No data to upload, just update the site. Recommended to do from dev box as couchDB instance may require special access to create views.
@@ -49,7 +48,6 @@ perfjankie({
   actions: actions,
 
   selenium: {
-    //hostname: 'local.docker', // or localhost or hub.browserstack.com
     hostname: 'local.docker', // or localhost or hub.browserstack.com
     port: 4444,
   }
