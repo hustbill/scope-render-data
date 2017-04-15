@@ -8,5 +8,5 @@ RUN yarn --pure-lockfile
 RUN npm i -S timely
 COPY webpack.local.config.js webpack.production.config.js server.js .babelrc .eslintrc .eslintignore /home/weave/
 EXPOSE 4042
-#CMD ["node", "server.js"]
-CMD sleep 290000 
+CMD ["node", "server.js"]
+
