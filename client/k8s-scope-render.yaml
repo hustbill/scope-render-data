@@ -7,7 +7,7 @@ spec:
   ports:
   - port: 80
     targetPort: 4042
-    nodePort: 4042
+    nodePort: 30040
     protocol: TCP
     name: scope-client
   selector:
