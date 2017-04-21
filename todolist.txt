@@ -1,7 +1,9 @@
 Completed
 ==================
 3. Show the bandwith data
+4. Show latency
 
+control the network latency
 
 
 To Do List
@@ -18,3 +20,5 @@ client/app/scripts/hoc/metric-feeder.js
 
 2. update all request workers with new options
 client/app/scripts/actions/app-actions.js
+
+
