@@ -7,6 +7,8 @@ var url = require('url');
 var app = express();
 
 var BACKEND_HOST = process.env.BACKEND_HOST || 'localhost';
+var WEAVE_SCOPE_APP_SERVICE_HOST = process.env.WEAVE_SCOPE_APP_SERVICE_HOST || 'localhost';
+// WEAVE_SCOPE_APP_SERVICE_HOST  WEAVE_SCOPE_APP_SERVICE_HOST=10.107.110.248
 var WEBPACK_SERVER_HOST = process.env.WEBPACK_SERVER_HOST || 'localhost';
 
 /************************************************************
@@ -18,7 +20,8 @@ var WEBPACK_SERVER_HOST = process.env.WEBPACK_SERVER_HOST || 'localhost';
 
 var backendProxy = httpProxy.createProxy({
   ws: true,
-  target: 'http://' + BACKEND_HOST + ':4040'
+ // target: 'http://' + BACKEND_HOST + ':4040'
+  target: 'http://' + WEAVE_SCOPE_APP_SERVICE_HOST
   // target: 'http://' + BACKEND_HOST  // export BACKEND_HOST=10.105.179.46
 });
 backendProxy.on('error', function(err) {
