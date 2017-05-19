@@ -21,7 +21,8 @@ var WEBPACK_SERVER_HOST = process.env.WEBPACK_SERVER_HOST || 'localhost';
 var backendProxy = httpProxy.createProxy({
   ws: true,
  // target: 'http://' + BACKEND_HOST + ':4040'
-  target: 'http://' + WEAVE_SCOPE_APP_SERVICE_HOST
+ target: 'http://localhost:4040'
+ // target: 'http://' + WEAVE_SCOPE_APP_SERVICE_HOST
   // target: 'http://' + BACKEND_HOST  // export BACKEND_HOST=10.105.179.46
 });
 backendProxy.on('error', function(err) {

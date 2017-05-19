@@ -15,6 +15,7 @@ import { focusSearch, pinNextMetric, hitBackspace, hitEnter, hitEsc, unpinMetric
   selectMetric, toggleHelp, toggleGridMode, shutdown } from '../actions/app-actions';
 import Details from './details';
 import Nodes from './nodes';
+import ViewModeSelector from './view-mode-selector';
 import GridModeSelector from './grid-mode-selector';
 import MetricSelector from './metric-selector';
 import NetworkSelector from './networks-selector';
@@ -120,6 +121,7 @@ class App extends React.Component {
               <Logo />
             </svg>}
           </div>
+          <ViewModeSelector />
           <Topologies />
           <GridModeSelector />
         </div>
