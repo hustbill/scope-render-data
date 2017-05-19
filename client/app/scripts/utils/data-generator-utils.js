@@ -40,17 +40,18 @@ function getNextValue(keyValues, maxValue) {
 }
 
 export const METRIC_LABELS = {
-  docker_cpu_total_usage: 'CPU',
+  docker_cpu_total_usage: 'Latency',
   docker_memory_usage: 'Memory',
-  host_cpu_usage_percent: 'CPU',
+  host_cpu_usage_percent: 'Latency',
   host_mem_usage_bytes: 'Memory',
   load1: 'Load 1',
   load15: 'Load 15',
   load5: 'Load 5',
   open_files_count: 'Open files',
-  process_cpu_usage_percent: 'CPU',
+  process_cpu_usage_percent: 'Latency',
   process_memory_usage_bytes: 'Memory'
 };
+
 
 
 export function label(m) {
