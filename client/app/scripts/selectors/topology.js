@@ -1,6 +1,42 @@
 import { createSelector } from 'reselect';
 
+import {
+  RESOURCE_VIEW_MODE,
+  GRAPH_VIEW_MODE,
+  TABLE_VIEW_MODE,
+  CONTROL_VIEW_MODE,
+} from '../constants/naming';
+
+
 // TODO: Consider moving more stuff from 'topology-utils' here.
+
+export const isGraphViewModeSelector = createSelector(
+  [
+    state => state.get('topologyViewMode'),
+  ],
+  viewMode => viewMode === GRAPH_VIEW_MODE
+);
+
+export const isTableViewModeSelector = createSelector(
+  [
+    state => state.get('topologyViewMode'),
+  ],
+  viewMode => viewMode === TABLE_VIEW_MODE
+);
+
+export const isControlViewModeSelector = createSelector(
+  [
+    state => state.get('topologyViewMode'),
+  ],
+  viewMode => viewMode === CONTROL_VIEW_MODE
+);
+
+export const isResourceViewModeSelector = createSelector(
+  [
+    state => state.get('topologyViewMode'),
+  ],
+  viewMode => viewMode === RESOURCE_VIEW_MODE
+);
 
 // Checks if graph complexity is high. Used to trigger
 // table view on page load and decide on animations.
