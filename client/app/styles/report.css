@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+}
+#container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  display: block;
+  margin: 150px 120px 120px 450px;
+  width: 1024px;
+  height: 1960px;
+  background-color: #fff;
+}
