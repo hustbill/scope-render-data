@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
+import { trackMixpanelEvent } from '../utils/tracking-utils';
 import { searchMatchCountByTopologySelector } from '../selectors/search';
+import { isResourceViewModeSelector } from '../selectors/topology';
 import { clickTopology } from '../actions/app-actions';
 
 
@@ -24,8 +26,12 @@ class Topologies extends React.Component {
     this.onTopologyClick = this.onTopologyClick.bind(this);
   }
 
-  onTopologyClick(ev) {
+  onTopologyClick(ev, topology) {
     ev.preventDefault();
+    trackMixpanelEvent('scope.topology.selector.click', {
+      topologyId: topology.get('id'),
+      parentTopologyId: topology.get('parentId'),
+    });
     this.props.clickTopology(ev.currentTarget.getAttribute('rel'));
   }
 
@@ -35,14 +41,15 @@ class Topologies extends React.Component {
     const searchMatchCount = this.props.searchMatchCountByTopology.get(topologyId) || 0;
     const title = basicTopologyInfo(subTopology, searchMatchCount);
     const className = classnames('topologies-sub-item', {
+      // Don't show matches in the resource view as searching is not supported there yet.
+      'topologies-sub-item-matched': !this.props.isResourceViewMode && searchMatchCount,
       'topologies-sub-item-active': isActive,
-      'topologies-sub-item-matched': searchMatchCount
     });
 
     return (
       <div
         className={className} title={title} key={topologyId} rel={topologyId}
-        onClick={this.onTopologyClick}>
+        onClick={ev => this.onTopologyClick(ev, subTopology)}>
         <div className="topologies-sub-item-label">
           {subTopology.get('name')}
         </div>
@@ -54,23 +61,27 @@ class Topologies extends React.Component {
     const isActive = topology === this.props.currentTopology;
     const searchMatchCount = this.props.searchMatchCountByTopology.get(topology.get('id')) || 0;
     const className = classnames('topologies-item-main', {
+      // Don't show matches in the resource view as searching is not supported there yet.
+      'topologies-item-main-matched': !this.props.isResourceViewMode && searchMatchCount,
       'topologies-item-main-active': isActive,
-      'topologies-item-main-matched': searchMatchCount
     });
     const topologyId = topology.get('id');
     const title = basicTopologyInfo(topology, searchMatchCount);
 
     return (
       <div className="topologies-item" key={topologyId}>
-        <div className={className} title={title} rel={topologyId} onClick={this.onTopologyClick}>
+        <div
+          className={className} title={title} rel={topologyId}
+          onClick={ev => this.onTopologyClick(ev, topology)}>
           <div className="topologies-item-label">
-            { topology.get('name')}
+            {topology.get('name')}
           </div>
         </div>
-        {/* <div className="topologies-sub">
-          {topology.has('sub_topologies')
-            && topology.get('sub_topologies').map(subTop => this.renderSubTopology(subTop))}
-        </div> */}
+        <div className="topologies-sub">
+          {// topology.has('sub_topologies')
+            // && topology.get('sub_topologies').map(subTop => this.renderSubTopology(subTop))
+          }
+        </div>
       </div>
     );
   }
@@ -91,6 +102,7 @@ function mapStateToProps(state) {
     topologies: state.get('topologies'),
     currentTopology: state.get('currentTopology'),
     searchMatchCountByTopology: searchMatchCountByTopologySelector(state),
+    isResourceViewMode: isResourceViewModeSelector(state),
   };
 }
 
