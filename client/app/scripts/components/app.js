@@ -1,28 +1,43 @@
 import debug from 'debug';
 import React from 'react';
 import { connect } from 'react-redux';
-
 import Logo from './logo';
-import Footer from './footer';
+// import Footer from './footer';
 import Sidebar from './sidebar';
-import HelpPanel from './help-panel';
-import TroubleshootingMenu from './troubleshooting-menu';
+// import HelpPanel from './help-panel';
+// import TroubleshootingMenu from './troubleshooting-menu';
+// import Search from './search';
 import Status from './status';
 import Topologies from './topologies';
 import TopologyOptions from './topology-options';
 import { getApiDetails, getTopologies } from '../utils/web-api-utils';
-import { focusSearch, pinNextMetric, hitBackspace, hitEnter, hitEsc, unpinMetric,
-  selectMetric, toggleHelp, toggleGridMode, shutdown } from '../actions/app-actions';
+import {
+  focusSearch,
+  pinNextMetric,
+  hitBackspace,
+  hitEnter,
+  hitEsc,
+  unpinMetric,
+  toggleHelp,
+  setGraphView,
+  setTableView,
+  setResourceView,
+  shutdown
+} from '../actions/app-actions';
 import Details from './details';
 import Nodes from './nodes';
 import ViewModeSelector from './view-mode-selector';
-import GridModeSelector from './grid-mode-selector';
-import MetricSelector from './metric-selector';
 import NetworkSelector from './networks-selector';
 import DebugToolbar, { showingDebugToolbar, toggleDebugToolbar } from './debug-toolbar';
 import { getRouter, getUrlState } from '../utils/router-utils';
-import { activeTopologyOptionsSelector } from '../selectors/topology';
 import { availableNetworksSelector } from '../selectors/node-networks';
+import {
+  activeTopologyOptionsSelector,
+  isResourceViewModeSelector,
+  isTableViewModeSelector,
+  isGraphViewModeSelector,
+} from '../selectors/topology';
+
 
 const BACKSPACE_KEY_CODE = 8;
 const ENTER_KEY_CODE = 13;
@@ -43,8 +58,9 @@ class App extends React.Component {
 
     getRouter(this.props.dispatch, this.props.urlState).start({hashbang: true});
     if (!this.props.routeSet) {
-      // dont request topologies when already done via router
-      getTopologies(this.props.activeTopologyOptions, this.props.dispatch);
+      // dont request topologies when already done via router.
+      // If running as a component, always request topologies when the app mounts.
+      getTopologies(this.props.activeTopologyOptions, this.props.dispatch, true);
     }
     getApiDetails(this.props.dispatch);
   }
@@ -52,7 +68,7 @@ class App extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('keypress', this.onKeyPress);
     window.removeEventListener('keyup', this.onKeyUp);
-    shutdown();
+    this.props.dispatch(shutdown());
   }
 
   onKeyUp(ev) {
@@ -86,11 +102,14 @@ class App extends React.Component {
         dispatch(pinNextMetric(-1));
       } else if (char === '>') {
         dispatch(pinNextMetric(1));
-      } else if (char === 't' || char === 'g') {
-        dispatch(toggleGridMode());
+      } else if (char === 'g') {
+        dispatch(setGraphView());
+      } else if (char === 't') {
+        dispatch(setTableView());
+      } else if (char === 'r') {
+        dispatch(setResourceView());
       } else if (char === 'q') {
         dispatch(unpinMetric());
-        dispatch(selectMetric(null));
       } else if (char === '/') {
         ev.preventDefault();
         dispatch(focusSearch());
@@ -101,18 +120,13 @@ class App extends React.Component {
   }
 
   render() {
-    const { gridMode, showingDetails, showingHelp, showingMetricsSelector,
-      showingNetworkSelector, showingTroubleshootingMenu } = this.props;
+    const { isTableViewMode, isGraphViewMode, isResourceViewMode, showingDetails,
+            showingNetworkSelector} = this.props;
     const isIframe = window !== window.top;
 
     return (
       <div className="scope-app">
         {showingDebugToolbar() && <DebugToolbar />}
-
-        {showingHelp && <HelpPanel />}
-
-        {showingTroubleshootingMenu && <TroubleshootingMenu />}
-
         {showingDetails && <Details />}
 
         <div className="header">
@@ -123,19 +137,14 @@ class App extends React.Component {
           </div>
           <ViewModeSelector />
           <Topologies />
-          <GridModeSelector />
         </div>
-
         <Nodes />
 
-        <Sidebar classNames={gridMode ? 'sidebar-gridmode' : ''}>
-          {showingMetricsSelector && !gridMode && <MetricSelector />}
-          {showingNetworkSelector && !gridMode && <NetworkSelector />}
-          <Status />
-          <TopologyOptions />
+        <Sidebar classNames={isTableViewMode ? 'sidebar-gridmode' : ''}>
+          {showingNetworkSelector && isGraphViewMode && <NetworkSelector />}
+          {!isResourceViewMode && <Status />}
+          {!isResourceViewMode && <TopologyOptions />}
         </Sidebar>
-
-        <Footer />
       </div>
     );
   }
@@ -145,12 +154,13 @@ class App extends React.Component {
 function mapStateToProps(state) {
   return {
     activeTopologyOptions: activeTopologyOptionsSelector(state),
-    gridMode: state.get('gridMode'),
+    isResourceViewMode: isResourceViewModeSelector(state),
+    isTableViewMode: isTableViewModeSelector(state),
+    isGraphViewMode: isGraphViewModeSelector(state),
     routeSet: state.get('routeSet'),
     showingDetails: state.get('nodeDetails').size > 0,
-    showingHelp: state.get('showingHelp'),
-    showingTroubleshootingMenu: state.get('showingTroubleshootingMenu'),
-    showingMetricsSelector: state.get('availableCanvasMetrics').count() > 0,
+    // showingHelp: state.get('showingHelp'),
+    // showingTroubleshootingMenu: state.get('showingTroubleshootingMenu'),
     showingNetworkSelector: availableNetworksSelector(state).count() > 0,
     showingTerminal: state.get('controlPipes').size > 0,
     urlState: getUrlState(state)
