@@ -4,30 +4,24 @@ import { debounce } from 'lodash';
 
 import NodesChart from '../charts/nodes-chart';
 import NodesGrid from '../charts/nodes-grid';
-import NodesError from '../charts/nodes-error';
+import NodesResources from '../components/nodes-resources';
+import NodesControl from '../components/nodes-control';
+// import NodesError from '../charts/nodes-error';
 import DelayedShow from '../utils/delayed-show';
 import { Loading, getNodeType } from './loading';
 import { isTopologyEmpty } from '../utils/topology-utils';
 import { setViewportDimensions } from '../actions/app-actions';
-import { VIEWPORT_RESIZE_DEBOUNCE_INTERVAL } from '../constants/timer';
+import {
+  isGraphViewModeSelector,
+  isTableViewModeSelector,
+  isResourceViewModeSelector,
+  isControlViewModeSelector,
+} from '../selectors/topology';
 
+import { VIEWPORT_RESIZE_DEBOUNCE_INTERVAL } from '../constants/timer';
 
 const navbarHeight = 194;
 const marginTop = 0;
-
-const EmptyTopologyError = show => (
-  <NodesError faIconClass="fa-circle-thin" hidden={!show}>
-    <div className="heading">Nothing to show. This can have any of these reasons:</div>
-    <ul>
-      <li>We haven&apos;t received any reports from probes recently.
-       Are the probes properly configured?</li>
-      <li>There are nodes, but they&apos;re currently hidden. Check the view options
-       in the bottom-left if they allow for showing hidden nodes.</li>
-      <li>Containers view only: you&apos;re not running Docker,
-       or you don&apos;t have any containers.</li>
-    </ul>
-  </NodesError>
-);
 
 class Nodes extends React.Component {
   constructor(props, context) {
@@ -47,9 +41,10 @@ class Nodes extends React.Component {
   }
 
   render() {
-    const { topologyEmpty, gridMode, topologiesLoaded, nodesLoaded, topologies,
-      currentTopology } = this.props;
+    const { topologiesLoaded, nodesLoaded, topologies, currentTopology,
+      isGraphViewMode, isTableViewMode, isResourceViewMode, isControlViewMode } = this.props;
 
+    // TODO: Rename view mode components.
     return (
       <div className="nodes-wrapper">
         <DelayedShow delay={1000} show={!topologiesLoaded || (topologiesLoaded && !nodesLoaded)}>
@@ -58,9 +53,10 @@ class Nodes extends React.Component {
             itemType={getNodeType(currentTopology, topologies)}
             show={topologiesLoaded && !nodesLoaded} />
         </DelayedShow>
-        {EmptyTopologyError(topologiesLoaded && nodesLoaded && topologyEmpty)}
-
-        {gridMode ? <NodesGrid /> : <NodesChart />}
+        {isGraphViewMode && <NodesChart />}
+        {isTableViewMode && <NodesGrid />}
+        {isResourceViewMode && <NodesResources />}
+        {isControlViewMode && <NodesControl />}
       </div>
     );
   }
@@ -75,8 +71,11 @@ class Nodes extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    isGraphViewMode: isGraphViewModeSelector(state),
+    isTableViewMode: isTableViewModeSelector(state),
+    isResourceViewMode: isResourceViewModeSelector(state),
+    isControlViewMode: isControlViewModeSelector(state),
     currentTopology: state.get('currentTopology'),
-    gridMode: state.get('gridMode'),
     nodesLoaded: state.get('nodesLoaded'),
     topologies: state.get('topologies'),
     topologiesLoaded: state.get('topologiesLoaded'),

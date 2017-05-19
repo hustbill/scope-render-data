@@ -30,6 +30,8 @@
     "page": "1.7.1",
     "react": "15.4.2",
     "react-addons-perf": "15.4.2",
+    "react-bootstrap-table": "^3.3.4",
+    "recharts": "^0.22.4",
     "react-dom": "15.4.2",
     "react-motion": "0.4.5",
     "react-redux": "4.4.6",
